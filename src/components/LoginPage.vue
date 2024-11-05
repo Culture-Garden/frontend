@@ -17,6 +17,7 @@ const submitLogin = async () => {
         loginId: loginId.value,
         password: password.value,
       }),
+      credentials: "include", // 쿠키를 포함하여 서버에 요청
     });
 
     if (response.ok) {

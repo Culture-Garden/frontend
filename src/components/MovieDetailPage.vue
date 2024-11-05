@@ -28,6 +28,7 @@ onMounted(fetchData);
 <template>
   <div v-if="postDetails">
     <h2>{{ postDetails.title }}</h2>
+    <p>작성일자: {{ postDetails.username }}</p>
     <p>작성일자: {{ postDetails.createdAt }}</p>
     <p>{{ postDetails.content }}</p>
     <!-- 내용 표시 -->
