@@ -7,6 +7,7 @@
       <RouterLink to="/movie" class="nav-link">Movie</RouterLink>
       <RouterLink to="/signUp" class="nav-link">Sign Up</RouterLink>
       <RouterLink to="/login" class="nav-link">Login</RouterLink>
+      <RouterLink to="/logout" class="nav-link">Logout</RouterLink>
     </nav>
   </header>
 </template>

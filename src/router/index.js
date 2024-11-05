@@ -5,6 +5,7 @@ import SignUpPage from "@/components/SignUpPage.vue";
 import CreateBoard from "@/components/CreateMovieBoard.vue";
 import MovieDetailPage from "@/components/MovieDetailPage.vue";
 import LoginPage from "@/components/LoginPage.vue";
+import LogoutPage from "@/components/LogoutPage.vue";
 
 const routes = [
   {
@@ -22,6 +23,10 @@ const routes = [
   {
     path: "/login",
     component: LoginPage,
+  },
+  {
+    path: "/logout",
+    component: LogoutPage,
   },
   {
     path: "/movie/create",

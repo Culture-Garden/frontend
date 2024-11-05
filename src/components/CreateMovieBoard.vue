@@ -16,6 +16,7 @@ const submitForm = async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData.value),
+      credentials: "include", // 쿠키를 포함하여 서버에 요청
     });
 
     if (response.ok) {
@@ -55,7 +56,7 @@ const submitForm = async () => {
 
 .form-input,
 .form-textarea {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #444; /* 어두운 테두리 */
