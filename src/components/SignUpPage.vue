@@ -10,16 +10,16 @@ const formData = ref({
 });
 
 const router = useRouter(); // useRouter로 router 인스턴스 가져오기
-
 const submitForm = async () => {
   if (formData.value.password !== formData.value.confirmPassword) {
     alert("비밀번호가 일치하지 않습니다.");
     return;
   }
   try {
-    const response = await fetch("http://localhost:8088/user/signUp", {
+    const response = await fetch("http://localhost:8088/auth/signUp", {
       method: "POST",
       headers: {
+        "Cache-Control": "no-cache",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData.value),
