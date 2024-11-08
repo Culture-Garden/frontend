@@ -8,6 +8,7 @@
       <RouterLink to="/signUp" class="nav-link">Sign Up</RouterLink>
       <RouterLink to="/login" class="nav-link">Login</RouterLink>
       <RouterLink to="/logout" class="nav-link">Logout</RouterLink>
+      <RouterLink :to="`/myProfile`" class="nav-link">User</RouterLink>
     </nav>
   </header>
 </template>
