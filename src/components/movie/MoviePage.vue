@@ -7,7 +7,7 @@ const router = useRouter(); // useRouter로 router 인스턴스 가져오기
 
 const fetchData = async () => {
   try {
-    const response = await fetch("http://localhost:8088/board/movie");
+    const response = await fetch("http://localhost:8088/board/movie/all");
     if (!response.ok) throw new Error("Network response was not ok");
     const data = await response.json();
     posts.value = data;

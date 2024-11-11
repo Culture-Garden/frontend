@@ -8,6 +8,7 @@ import LoginPage from "@/components/auth/LoginPage.vue";
 import LogoutPage from "@/components/auth/LogoutPage.vue";
 import MyProfile from "@/components/MyProfile/MyProfile.vue";
 import MyProfileDetail from "@/components/MyProfile/MyProfileDetail.vue";
+import EditMovieBoard from "@/components/movie/EditMovieBoard.vue";
 
 const routes = [
   {
@@ -45,6 +46,10 @@ const routes = [
   {
     path: "/movie/create",
     component: CreateBoard,
+  },
+  {
+    path: "/movie/edit/:id",
+    component: EditMovieBoard,
   },
 ];
 
