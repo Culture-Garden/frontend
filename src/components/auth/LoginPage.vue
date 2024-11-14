@@ -8,7 +8,7 @@ const router = useRouter();
 
 const submitLogin = async () => {
   try {
-    const response = await fetch("http://localhost:8088/user/login", {
+    const response = await fetch("http://localhost:8088/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
