@@ -25,6 +25,7 @@ const submitForm = async () => {
       router.push("/movie");
     } else {
       console.error("Failed to save data");
+      alert("로그인 후 이용 가능합니다");
     }
   } catch (error) {
     console.error("Error:", error);

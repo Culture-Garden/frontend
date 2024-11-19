@@ -75,6 +75,7 @@ const updateComment = async (commentId) => {
     fetchComments(route.params.id);
   } catch (error) {
     console.error("Error updating comment:", error);
+    alert("댓글 작성자만 수정 할 수 있습니다.");
   }
 };
 
@@ -122,9 +123,11 @@ onMounted(async () => {
 
 <template>
   <div v-if="postDetails">
-    <h2>{{ postDetails.title }}</h2>
-    <p>작성자: {{ postDetails.username }}</p>
-    <p>작성일자: {{ postDetails.createdAt }}</p>
+    <h2 class="post-title">{{ postDetails.title }}</h2>
+    <div class="post-meta">
+      <p class="post-author">{{ postDetails.username }}</p>
+      <p class="post-date">{{ postDetails.createdAt }}</p>
+    </div>
     <p>{{ postDetails.content }}</p>
 
     <div class="action-buttons">
@@ -141,20 +144,21 @@ onMounted(async () => {
     <div class="comment-section">
       <ul class="comment-list">
         <li class="comment-item" v-for="comment in comments" :key="comment.id">
-          <div>
+          <div class="comment-details">
             <p v-if="editCommentId !== comment.id" class="comment-content">
               {{ comment.content }}
             </p>
-            <input
-              v-else
-              v-model="editCommentContent"
-              @keyup.enter="updateComment(comment.id)"
-              class="comment-edit-input"
-            />
-            <p class="comment-username">작성자: {{ comment.username }}</p>
-            <p class="comment-username">작성자: {{ comment.createComment }}</p>
-
-            <!-- 댓글 작성자 표시 -->
+            <div v-else class="comment-edit">
+              <textarea
+                v-model="editCommentContent"
+                class="comment-edit-input"
+                placeholder="댓글을 수정하세요"
+              ></textarea>
+            </div>
+            <div class="comment-meta">
+              <p class="comment-username">{{ comment.username }}</p>
+              <p class="comment-createdAt">{{ comment.createdAt }}</p>
+            </div>
           </div>
           <div class="comment-actions">
             <button
@@ -169,15 +173,34 @@ onMounted(async () => {
             >
               수정
             </button>
-            <button @click="deleteComment(comment.id)" class="delete-button">
+            <button
+              v-if="editCommentId === comment.id"
+              @click="updateComment(comment.id)"
+              class="save-button"
+            >
+              등록
+            </button>
+            <button
+              v-if="editCommentId !== comment.id"
+              @click="deleteComment(comment.id)"
+              class="delete-button"
+            >
               삭제
             </button>
           </div>
         </li>
       </ul>
+
+      <!-- 댓글 작성 입력란 -->
       <div class="new-comment">
-        <input v-model="newComment" placeholder="댓글을 입력하세요" />
-        <button @click="createComment">댓글 작성</button>
+        <input
+          v-model="newComment"
+          placeholder="댓글을 입력하세요"
+          class="comment-input"
+        />
+        <button @click="createComment" class="submit-comment-btn">
+          댓글 작성
+        </button>
       </div>
     </div>
   </div>
@@ -187,15 +210,47 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.post-title {
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.post-meta .post-author {
+  font-weight: bold;
+}
+
+.post-meta .post-date {
+  font-style: italic;
+}
+
+.post-content {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #444;
+}
+
 .action-buttons {
   margin-top: 20px;
   display: flex;
-  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  justify-content: flex-end;
   gap: 10px;
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.save-button {
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
@@ -212,12 +267,21 @@ onMounted(async () => {
   color: white;
 }
 
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
 .edit-button:hover {
   background-color: #0056b3;
 }
 
 .delete-button:hover {
   background-color: #c82333;
+}
+
+.save-button:hover {
+  background-color: #218838;
 }
 
 /* 댓글 섹션 스타일 */
@@ -235,18 +299,29 @@ onMounted(async () => {
   border-bottom: 1px solid #ccc;
   padding: 10px 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .comment-content {
-  flex-grow: 1;
   margin-right: 10px;
+}
+
+.comment-meta {
+  font-size: 0.9em;
+  color: #777;
+  display: flex;
+  gap: 15px;
+}
+
+.comment-meta .comment-username,
+.comment-meta .comment-createdAt {
+  margin: 0;
 }
 
 .comment-actions {
   display: flex;
-  gap: 5px;
+  gap: 10px;
 }
 
 .comment-actions button {
@@ -275,29 +350,67 @@ onMounted(async () => {
   background-color: #c82333;
 }
 
+.comment-actions .save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.comment-actions .save-button:hover {
+  background-color: #218838;
+}
+
+.comment-edit {
+  width: 100%;
+}
+
+.comment-edit-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  min-height: 100px;
+  outline: none;
+  resize: none;
+}
+
+.comment-edit-input:focus {
+  border-color: #28a745;
+}
+
+/* 댓글 작성 입력란 스타일 */
 .new-comment {
   margin-top: 20px;
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
-.new-comment input {
+.comment-input {
   flex-grow: 1;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 25px;
+  font-size: 1em;
+  outline: none;
 }
 
-.new-comment button {
-  padding: 10px 20px;
+.comment-input:focus {
+  border-color: #28a745;
+}
+
+.submit-comment-btn {
+  padding: 12px 20px;
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 25px;
   cursor: pointer;
+  font-size: 1em;
 }
 
-.new-comment button:hover {
+.submit-comment-btn:hover {
   background-color: #218838;
 }
 </style>
