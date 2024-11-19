@@ -39,7 +39,7 @@ const updateBoard = async () => {
     router.replace(`/movie/${postDetails.value.id}`);
   } catch (error) {
     console.error("Error updating board:", error);
-    alert("게시글 수정에 실패했습니다.");
+    alert("게시글 작성자만 수정 할 수 있습니다.");
   }
 };
 
