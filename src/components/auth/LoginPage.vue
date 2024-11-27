@@ -21,14 +21,16 @@ const submitLogin = async () => {
     });
 
     if (response.ok) {
-      alert("로그인 성공:");
+      alert("로그인 성공");
       // 로그인 후 이동할 페이지
       router.push("/");
     } else {
-      alert("로그인 실패");
+      const errorData = await response.json(); // 에러 응답 파싱
+      alert(`로그인 실패: ${errorData.message}`); // 서버에서 받은 에러 메시지 출력
     }
   } catch (error) {
     console.error("오류:", error);
+    alert("서버와 통신 중 문제가 발생했습니다."); // 네트워크 오류 처리
   }
 };
 </script>
