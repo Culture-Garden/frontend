@@ -22,6 +22,21 @@ const fetchBoardById = async (id) => {
   }
 };
 
+const deleteBoardById = async (id) => {
+  try {
+    const response = await fetch(`http://localhost:8088/board/movie/${id}`, {
+      method: "DELETE",
+      credentials: "include", // 쿠키를 포함하여 서버에 요청
+    });
+    if (!response.ok) throw new Error("Failed to delete the post");
+    alert("게시글이 삭제되었습니다.");
+    router.push("/movie"); // 삭제 후 목록 페이지로 이동
+  } catch (error) {
+    console.error("Error deleting board:", error);
+    alert("게시글 작성자만 삭제할 수 있습니다.");
+  }
+};
+
 const fetchComments = async (boardId) => {
   try {
     const response = await fetch(`http://localhost:8088/comment/${boardId}`);
@@ -83,26 +98,16 @@ const deleteComment = async (commentId) => {
   try {
     const response = await fetch(
       `http://localhost:8088/comment/${route.params.id}/${commentId}`,
-      { method: "DELETE" }
+      {
+        method: "DELETE",
+        credentials: "include", // 쿠키를 포함하여 서버에 요청
+      }
     );
     if (!response.ok) throw new Error("Failed to delete comment");
     fetchComments(route.params.id);
   } catch (error) {
     console.error("Error deleting comment:", error);
-  }
-};
-
-const deleteBoardById = async (id) => {
-  try {
-    const response = await fetch(`http://localhost:8088/board/movie/${id}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Failed to delete the post");
-    alert("게시글이 삭제되었습니다.");
-    router.push("/movie"); // 삭제 후 목록 페이지로 이동
-  } catch (error) {
-    console.error("Error deleting board:", error);
-    alert("삭제 중 오류가 발생했습니다.");
+    alert("댓글 작성자만 삭제할 수 있습니다.");
   }
 };
 
