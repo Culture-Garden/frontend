@@ -5,18 +5,34 @@ import { useRouter } from "vue-router";
 const formData = ref({
   title: "",
   content: "",
+  image: null, // 이미지 추가
 });
 const router = useRouter();
 
+const handleImageChange = (event) => {
+  formData.value.image = event.target.files[0]; // 파일 선택
+};
+
 const submitForm = async () => {
   try {
+    const formDataToSend = new FormData(); // FormData 객체 생성
+    // 이미지 파일 추가
+    formDataToSend.append("image", formData.value.image);
+
+    // JSON 데이터를 Blob 형식으로 추가
+    const boardRequest = {
+      title: formData.value.title,
+      content: formData.value.content,
+    };
+    formDataToSend.append(
+      "boardRequest",
+      new Blob([JSON.stringify(boardRequest)], { type: "application/json" })
+    );
+
     const response = await fetch("http://localhost:8088/board/movie", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData.value),
-      credentials: "include", // 쿠키를 포함하여 서버에 요청
+      body: formDataToSend,
+      credentials: "include", // 쿠키 포함하여 요청
     });
 
     if (response.ok) {
@@ -42,17 +58,21 @@ const submitForm = async () => {
       placeholder="내용"
       class="form-textarea"
     ></textarea>
+    <br />
+    <input type="file" @change="handleImageChange" class="form-input" />
+    <br />
     <button @click="submitForm" class="submit-button">등록</button>
   </div>
 </template>
 
 <style scoped>
+/* 스타일은 그대로 사용 */
 .form-container {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  color: #f9f9f9; /* 밝은 텍스트 */
+  color: #f9f9f9;
 }
 
 .form-input,
@@ -60,26 +80,26 @@ const submitForm = async () => {
   width: 95%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #444; /* 어두운 테두리 */
+  border: 1px solid #444;
   border-radius: 4px;
-  background-color: #333; /* 어두운 배경 */
-  color: #f9f9f9; /* 밝은 텍스트 */
+  background-color: #333;
+  color: #f9f9f9;
   font-size: 1rem;
 }
 
 .form-textarea {
-  height: 200px; /* 세로 높이 조정 (예: 200px) */
-  resize: vertical; /* 사용자가 세로 크기를 조정할 수 있도록 */
+  height: 200px;
+  resize: vertical;
 }
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-  color: #aaa; /* 밝은 자리표시 텍스트 */
+  color: #aaa;
 }
 
 .submit-button {
   padding: 10px 20px;
-  background-color: #444; /* 어두운 버튼 배경 */
+  background-color: #444;
   color: #f9f9f9;
   border: none;
   border-radius: 4px;
@@ -90,6 +110,6 @@ const submitForm = async () => {
 }
 
 .submit-button:hover {
-  background-color: #555; /* 마우스 오버 시 약간 밝은 색 */
+  background-color: #555;
 }
 </style>

@@ -5,9 +5,11 @@ import { useRoute, useRouter } from "vue-router";
 const postDetails = ref({
   title: "",
   content: "",
-}); // 게시글 데이터 객체
-const route = useRoute(); // 현재 라우터 정보 가져오기
-const router = useRouter(); // 페이지 이동을 위해 사용
+  image: null, // 현재 이미지를 저장할 변수
+  newImage: null, // 새로 업로드된 이미지를 저장할 변수
+});
+const route = useRoute();
+const router = useRouter();
 
 const fetchBoardById = async (id) => {
   try {
@@ -20,22 +22,39 @@ const fetchBoardById = async (id) => {
   }
 };
 
+const handleImageChange = (event) => {
+  postDetails.value.newImage = event.target.files[0]; // 새 이미지 파일 저장
+};
+
 const updateBoard = async () => {
   try {
+    const formDataToSend = new FormData();
+    // 새로 업로드된 이미지 파일이 있으면 추가
+    if (postDetails.value.newImage) {
+      formDataToSend.append("image", postDetails.value.newImage);
+    }
+
+    // 텍스트 데이터 추가
+    const boardRequest = {
+      title: postDetails.value.title,
+      content: postDetails.value.content,
+    };
+    formDataToSend.append(
+      "boardRequest",
+      new Blob([JSON.stringify(boardRequest)], { type: "application/json" })
+    );
+
     const response = await fetch(
       `http://localhost:8088/board/movie/${postDetails.value.id}`,
       {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(postDetails.value),
-        credentials: "include", // 쿠키를 포함하여 서버에 요청
+        body: formDataToSend,
+        credentials: "include",
       }
     );
     if (!response.ok) throw new Error("Failed to update the board");
+
     alert("게시글이 성공적으로 수정되었습니다.");
-    // 수정 후 현재 페이지 새로고침
     router.replace(`/movie/${postDetails.value.id}`);
   } catch (error) {
     console.error("Error updating board:", error);
@@ -78,6 +97,26 @@ onMounted(async () => {
           required
         ></textarea>
       </div>
+      <div class="form-group">
+        <label>현재 이미지</label>
+        <div v-if="postDetails.image">
+          <img
+            :src="postDetails.image"
+            alt="현재 이미지"
+            class="current-image"
+          />
+        </div>
+        <div v-else>이미지가 없습니다</div>
+      </div>
+      <div class="form-group">
+        <label for="new-image">새 이미지 업로드</label>
+        <input
+          id="new-image"
+          type="file"
+          @change="handleImageChange"
+          class="form-control"
+        />
+      </div>
       <button type="submit" class="save-button">저장</button>
     </form>
   </div>
@@ -94,6 +133,13 @@ onMounted(async () => {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.current-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
 }
 
 .save-button {
