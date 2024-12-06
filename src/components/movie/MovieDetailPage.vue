@@ -135,6 +135,11 @@ onMounted(async () => {
     </div>
     <p>{{ postDetails.content }}</p>
 
+    <!-- 이미지 표시 -->
+    <div v-if="postDetails.image">
+      <img :src="postDetails.image" alt="게시글 이미지" class="post-image" />
+    </div>
+
     <div class="action-buttons">
       <button @click="goToEditPage(postDetails.id)" class="edit-button">
         수정
@@ -289,133 +294,80 @@ onMounted(async () => {
   background-color: #218838;
 }
 
+/* 이미지 스타일 */
+.post-image {
+  max-width: 80%; /* 화면의 80% 크기로 조정 */
+  height: auto; /* 비율에 맞춰 자동으로 높이 조정 */
+  margin-top: 20px;
+  border-radius: 8px;
+  display: block;
+  margin-left: auto; /* 가운데 정렬 */
+  margin-right: auto; /* 가운데 정렬 */
+}
+
 /* 댓글 섹션 스타일 */
 .comment-section {
   margin-top: 30px;
 }
 
 .comment-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style-type: none;
+  padding-left: 0;
 }
 
 .comment-item {
-  border-bottom: 1px solid #ccc;
-  padding: 10px 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.comment-content {
-  margin-right: 10px;
-}
-
-.comment-meta {
-  font-size: 0.9em;
-  color: #777;
-  display: flex;
-  gap: 15px;
-}
-
-.comment-meta .comment-username,
-.comment-meta .comment-createdAt {
-  margin: 0;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .comment-actions {
+  margin-top: 10px;
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
 }
 
 .comment-actions button {
   padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
 }
 
-.comment-actions .edit-button {
-  background-color: #3778c2;
+.comment-input {
+  padding: 10px;
+  width: 80%;
+  margin-right: 10px;
+}
+
+.submit-comment-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
   color: white;
+  border: none;
+  cursor: pointer;
 }
 
-.comment-actions .delete-button {
-  background-color: #d9534f;
-  color: white;
-}
-
-.comment-actions .edit-button:hover {
+.submit-comment-btn:hover {
   background-color: #0056b3;
-}
-
-.comment-actions .delete-button:hover {
-  background-color: #c82333;
-}
-
-.comment-actions .save-button {
-  background-color: #28a745;
-  color: white;
-}
-
-.comment-actions .save-button:hover {
-  background-color: #218838;
-}
-
-.comment-edit {
-  width: 100%;
 }
 
 .comment-edit-input {
   width: 100%;
+  height: 50px;
   padding: 10px;
-  font-size: 1em;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  min-height: 100px;
-  outline: none;
-  resize: none;
 }
 
-.comment-edit-input:focus {
-  border-color: #28a745;
+.comment-meta {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 5px;
 }
 
-/* 댓글 작성 입력란 스타일 */
-.new-comment {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.comment-username {
+  font-weight: bold;
 }
 
-.comment-input {
-  flex-grow: 1;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 25px;
-  font-size: 1em;
-  outline: none;
-}
-
-.comment-input:focus {
-  border-color: #28a745;
-}
-
-.submit-comment-btn {
-  padding: 12px 20px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.submit-comment-btn:hover {
-  background-color: #218838;
+.comment-createdAt {
+  font-style: italic;
 }
 </style>
