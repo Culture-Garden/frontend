@@ -136,8 +136,8 @@ onMounted(async () => {
     <p>{{ postDetails.content }}</p>
 
     <!-- 이미지 표시 -->
-    <div v-if="postDetails.imageUrl">
-      <img :src="postDetails.imageUrl" alt="게시글 이미지" class="post-image" />
+    <div v-if="postDetails.image">
+      <img :src="postDetails.image" alt="게시글 이미지" class="post-image" />
     </div>
 
     <div class="action-buttons">
@@ -296,10 +296,13 @@ onMounted(async () => {
 
 /* 이미지 스타일 */
 .post-image {
-  max-width: 100%;
-  height: auto;
+  max-width: 80%; /* 화면의 80% 크기로 조정 */
+  height: auto; /* 비율에 맞춰 자동으로 높이 조정 */
   margin-top: 20px;
   border-radius: 8px;
+  display: block;
+  margin-left: auto; /* 가운데 정렬 */
+  margin-right: auto; /* 가운데 정렬 */
 }
 
 /* 댓글 섹션 스타일 */

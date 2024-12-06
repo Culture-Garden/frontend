@@ -52,44 +52,55 @@ const submitForm = async () => {
 <template>
   <div class="form-container">
     <input v-model="formData.title" placeholder="제목" class="form-input" />
-    <br />
     <textarea
       v-model="formData.content"
       placeholder="내용"
       class="form-textarea"
     ></textarea>
-    <br />
-    <input type="file" @change="handleImageChange" class="form-input" />
-    <br />
+    <div class="file-input-wrapper">
+      <input
+        type="file"
+        @change="handleImageChange"
+        class="file-input"
+        id="file-input"
+      />
+      <label for="file-input" class="file-input-label">파일 선택</label>
+      <span class="file-name">
+        {{ formData.image ? formData.image.name : "선택된 파일 없음" }}
+      </span>
+    </div>
     <button @click="submitForm" class="submit-button">등록</button>
   </div>
 </template>
 
 <style scoped>
-/* 스타일은 그대로 사용 */
 .form-container {
   background-color: white;
-  padding: 20px;
+  padding: 15px 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .form-input,
 .form-textarea {
-  width: 95%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #444;
+  width: 100%;
+  padding: 8px 10px;
+  margin: 0;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #333;
-  color: #f9f9f9;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
 .form-textarea {
-  height: 200px;
-  resize: vertical;
+  height: 150px;
+  resize: none;
 }
 
 .form-input::placeholder,
@@ -97,19 +108,50 @@ const submitForm = async () => {
   color: #aaa;
 }
 
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.file-input {
+  display: none; /* 기본 파일 입력 숨김 */
+}
+
+.file-input-label {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: #0056b3;
+}
+
+.file-name {
+  font-size: 0.85rem;
+  color: #555;
+  font-style: italic;
+}
+
 .submit-button {
-  padding: 10px 20px;
-  background-color: #444;
-  color: #f9f9f9;
+  padding: 8px 15px;
+  background-color: #28a745;
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
+  text-align: center;
   transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color: #555;
+  background-color: #218838;
 }
 </style>
