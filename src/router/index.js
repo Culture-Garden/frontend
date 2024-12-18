@@ -9,6 +9,7 @@ import LogoutPage from "@/components/auth/LogoutPage.vue";
 import MyProfile from "@/components/MyProfile/MyProfile.vue";
 import MyProfileDetail from "@/components/MyProfile/MyProfileDetail.vue";
 import EditMovieBoard from "@/components/movie/EditMovieBoard.vue";
+import WeatherAPI from "@/components/weather/WeatherAPI.vue";
 
 const routes = [
   {
@@ -50,6 +51,10 @@ const routes = [
   {
     path: "/movie/edit/:id",
     component: EditMovieBoard,
+  },
+  {
+    path: "/weather",
+    component: WeatherAPI,
   },
 ];
 

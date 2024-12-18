@@ -4,6 +4,7 @@
   <header id="nav">
     <RouterLink to="/" class="logo">영화의 습작</RouterLink>
     <nav>
+      <RouterLink to="/weather" class="nav-link">Weather</RouterLink>
       <RouterLink to="/movie" class="nav-link">Movie</RouterLink>
       <RouterLink to="/signUp" class="nav-link">Sign Up</RouterLink>
       <RouterLink to="/login" class="nav-link">Login</RouterLink>
