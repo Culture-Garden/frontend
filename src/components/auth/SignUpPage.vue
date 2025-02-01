@@ -19,6 +19,7 @@ const submitForm = async () => {
   }
   try {
     const response = await fetch("http://localhost:8088/auth/signUp", {
+      // ec2에 맞춰서 임의 변경
       method: "POST",
       headers: {
         "Cache-Control": "no-cache",
