@@ -12,7 +12,7 @@ const router = useRouter();
 // 사용자 정보 가져오기
 const fetchUserData = async () => {
   try {
-    const response = await fetch("http://localhost:8088/myProfile", {
+    const response = await fetch("http://localhost:8088/api/myProfile", {
       method: "GET",
       credentials: "include", // 쿠키 포함
     });

@@ -7,7 +7,7 @@ const router = useRouter(); // useRouter로 router 인스턴스 가져오기
 
 const fetchData = async () => {
   try {
-    const response = await fetch("http://localhost:8088/myProfile", {
+    const response = await fetch("http://localhost:8088/api/myProfile", {
       method: "GET",
       credentials: "include", // 쿠키 포함
     });

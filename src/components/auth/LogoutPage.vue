@@ -5,7 +5,7 @@ const router = useRouter();
 
 const submitLogout = async () => {
   try {
-    const response = await fetch("http://localhost:8088/auth/logout", {
+    const response = await fetch("http://localhost:8088/api/auth/logout", {
       method: "POST",
       credentials: "include", // 쿠키를 포함하여 서버에 요청
     });

@@ -29,7 +29,7 @@ const submitForm = async () => {
       new Blob([JSON.stringify(boardRequest)], { type: "application/json" })
     );
 
-    const response = await fetch("http://localhost:8088/board/movie", {
+    const response = await fetch("http://localhost:8088/api/board/movie", {
       method: "POST",
       body: formDataToSend,
       credentials: "include", // 쿠키 포함하여 요청

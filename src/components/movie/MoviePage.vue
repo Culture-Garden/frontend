@@ -18,7 +18,7 @@ const fetchData = async (
   type = searchType.value
 ) => {
   try {
-    let url = `http://localhost:8088/board/movie?page=${page}&size=${
+    let url = `http://localhost:8088/api/board/movie?page=${page}&size=${
       pageSize.value - 1
     }`;
 
