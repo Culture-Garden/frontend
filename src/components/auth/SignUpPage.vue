@@ -18,7 +18,7 @@ const submitForm = async () => {
     return;
   }
   try {
-    const response = await fetch("http://localhost:8088/auth/signUp", {
+    const response = await fetch("http://localhost:8088/api/auth/signUp", {
       // ec2에 맞춰서 임의 변경
       method: "POST",
       headers: {

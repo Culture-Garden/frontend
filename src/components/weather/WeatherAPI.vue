@@ -42,7 +42,7 @@ const fetchWeatherData = async () => {
   try {
     errorMessage.value = "";
     const response = await fetch(
-      `http://localhost:8088/weather?baseDate=${baseDateRef.value}&baseTime=${baseTimeRef.value}&nx=${nx.value}&ny=${ny.value}`
+      `http://localhost:8088/api/weather?baseDate=${baseDateRef.value}&baseTime=${baseTimeRef.value}&nx=${nx.value}&ny=${ny.value}`
     );
 
     if (!response.ok) {

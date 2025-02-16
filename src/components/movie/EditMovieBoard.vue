@@ -14,7 +14,7 @@ const router = useRouter();
 
 const fetchBoardById = async (id) => {
   try {
-    const response = await fetch(`http://localhost:8088/board/movie/${id}`);
+    const response = await fetch(`http://localhost:8088/api/board/movie/${id}`);
     if (!response.ok) throw new Error("Network response was not ok");
     return await response.json();
   } catch (error) {
